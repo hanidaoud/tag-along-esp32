@@ -1,0 +1,44 @@
+#ifndef SS_PIN
+#define SS_PIN 5
+#endif
+
+#ifndef RST_PIN
+#define RST_PIN 22
+#endif
+
+#ifndef BUZZ
+#define BUZZ 14
+#endif
+
+#ifndef LED_WiR
+#define LED_WiR 33
+#endif
+
+#ifndef LED_WiG
+#define LED_WiG 32
+#endif
+
+#ifndef LED_OK
+#define LED_OK 25
+#endif
+
+#ifndef LED_NOK
+#define LED_NOK 26
+#endif
+
+#ifndef ESSID
+#define ESSID "D-LINK 123"
+#endif
+
+#ifndef PASSWD
+#define PASSWD "Password123"
+#endif
+
+#ifndef IP_ADDRESS
+#define IP_ADDRESS "192.168.1.135:6868"
+#endif
+
+#ifndef UUID
+#define UUID "2c56d4c7-5c46-4191-bd65-5dd820b41c30"
+#endif
+
