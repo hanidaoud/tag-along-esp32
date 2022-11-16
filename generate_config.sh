@@ -4,6 +4,30 @@ PINS=("SS_PIN" "RST_PIN" "BUZZ" "LED_WiR" "LED_WiG" "LED_OK" "LED_NOK")
 DEFAULT_PINS=(5 22 14 33 32 25 26)
 NET=("ESSID" "PASSWD" "IP_ADDRESS")
 
+set_passwd()
+{
+    unset password
+
+    while IFS= read -p "$prompt" -r -s -n 1 char
+    do
+        # Enter - accept password
+        if [[ $char == $'\0' ]] ; then
+            break
+        fi
+        # Backspace
+        if [[ $char == $'\177' ]] && [[ ${#password} > 0 ]] ; then
+            prompt=$'\b \b'
+            password="${password%?}"
+        elif [[ $char == $'\177' ]] && [[ ${#password} == 0 ]] ; then
+            prompt=$''
+        else
+            prompt='*'
+            password+="$char"
+        fi
+    done
+
+}
+
 if [ -f config.h ]
 then
     read -p ":: $(tput bold)Remove existing config file [y/N] $(tput sgr0)" yn
@@ -33,8 +57,9 @@ for i in {0..2}
 do
     if [[ $i -eq 1 ]]
     then
-        read -s -p ":: $(tput bold)Enter password: $(tput sgr0)" n
-        echo -e "#ifndef ${NET[$i]}\n#define ${NET[$i]} \"$n\"\n#endif\n" >> config.h
+        echo -ne ":: $(tput bold)Enter password: $(tput sgr0)"
+        set_passwd
+        echo -e "#ifndef ${NET[$i]}\n#define ${NET[$i]} \"$password\"\n#endif\n" >> config.h
         echo
     else
         read -p ":: $(tput bold)Enter ${NET[$i]}: $(tput sgr0)" n
