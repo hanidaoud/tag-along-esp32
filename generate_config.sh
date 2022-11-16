@@ -10,12 +10,9 @@ set_passwd()
 
     while IFS= read -p "$prompt" -r -s -n 1 char
     do
-        # Enter - accept password
         if [[ $char == $'\0' ]] ; then
             break
-        fi
-        # Backspace
-        if [[ $char == $'\177' ]] && [[ ${#password} > 0 ]] ; then
+        elif [[ $char == $'\177' ]] && [[ ${#password} > 0 ]] ; then
             prompt=$'\b \b'
             password="${password%?}"
         elif [[ $char == $'\177' ]] && [[ ${#password} == 0 ]] ; then
@@ -68,7 +65,7 @@ do
 done
 
 
-read -p ":: $(tput bold)Do you want to use the default UUID [Y/n] $(tput sgr0)" yn
+read -p ":: $(tput bold)Use the default UUID [Y/n] $(tput sgr0)" yn
 
 case $yn in
     [Nn]* ) read -p ":: $(tput bold)Enter new UUID: $(tput sgr0)" u
