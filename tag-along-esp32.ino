@@ -29,10 +29,17 @@ void InitWiFi(bool action)
     digitalWrite(LED_WiG, LOW);
 }
 
-void doBuzz(int freq)
+void doBuzz(int freq, int dur)
 {
+  if (freq == 0)
+  {
+    digitalWrite(BUZZ, HIGH);
+    delay(dur);
+    digitalWrite(BUZZ, LOW);
+    return;
+  }
   tone(BUZZ, freq);
-  delay(500);
+  delay(dur);
   noTone(BUZZ);
 }
 
@@ -41,19 +48,19 @@ void feedback(int res)
   switch(res){
       case 200:
         digitalWrite(LED_OK, LOW);
-        doBuzz(900);
+        doBuzz(0, 500); //900);
         digitalWrite(LED_OK, HIGH);
         break;
       case 400:
         delay(500);
         digitalWrite(LED_NOK, LOW);
-        doBuzz(300);
+        doBuzz(100, 500);
         digitalWrite(LED_NOK, HIGH);
         break;
       default:
         digitalWrite(LED_OK, LOW);
         digitalWrite(LED_NOK, LOW);
-        doBuzz(750);
+        doBuzz(750, 500);
         digitalWrite(LED_OK, HIGH);
         digitalWrite(LED_NOK, HIGH);
         break;
@@ -109,7 +116,7 @@ void loop()
   
   if (tag.substring(3) != "")
   {
-    doBuzz(500);
+    doBuzz(0, 100);
     WiFiClient client;
     HTTPClient http;
     http.begin(client, String("http://") + IP_ADDRESS + "/log");     
