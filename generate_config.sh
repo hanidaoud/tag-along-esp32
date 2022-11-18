@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 PINS=("SS_PIN" "RST_PIN" "BUZZ" "LED_WiR" "LED_WiG" "LED_OK" "LED_NOK")
-DEFAULT_PINS=(5 22 14 33 32 25 26)
+DEFAULT_PINS=(5 22 14 32 33 26 25)
 NET=("ESSID" "PASSWD" "IP_ADDRESS")
 
 set_passwd()
