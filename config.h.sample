@@ -11,19 +11,23 @@
 #endif
 
 #ifndef LED_WiR
-#define LED_WiR 33
+#define LED_WiR 32
 #endif
 
 #ifndef LED_WiG
-#define LED_WiG 32
+#define LED_WiG 33
 #endif
 
 #ifndef LED_OK
-#define LED_OK 25
+#define LED_OK 26
 #endif
 
 #ifndef LED_NOK
-#define LED_NOK 26
+#define LED_NOK 25
+#endif
+
+#ifndef MODE
+#define MODE "CATHODE"
 #endif
 
 #ifndef ESSID

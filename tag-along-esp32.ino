@@ -19,14 +19,14 @@ void InitWiFi(bool action)
   WiFi.begin(ssid, password);
     Serial.println("Reconnecting to WiFi...");
     while (WiFi.status() != WL_CONNECTED) {
-      digitalWrite(LED_WiG, LOW);
-      digitalWrite(LED_WiR, LOW);
+      digitalWrite(LED_WiG, MODE == "ANODE" ? LOW : HIGH);
+      digitalWrite(LED_WiR, MODE == "ANODE" ? LOW : HIGH);
       delay(125);
-      digitalWrite(LED_WiG, HIGH);
-      digitalWrite(LED_WiR, HIGH);
+      digitalWrite(LED_WiG, MODE == "ANODE" ? HIGH : LOW);
+      digitalWrite(LED_WiR, MODE == "ANODE" ? HIGH : LOW);
       delay(125);
     }
-    digitalWrite(LED_WiG, LOW);
+    digitalWrite(LED_WiG, MODE == "ANODE" ? LOW : HIGH);
 }
 
 void doBuzz(int freq, int dur)
@@ -47,26 +47,26 @@ void feedback(int res)
 {
   switch(res){
       case 200:
-        digitalWrite(LED_OK, LOW);
+        delay(100);
+        digitalWrite(LED_OK, MODE == "ANODE" ? LOW : HIGH);
         doBuzz(0, 500); //900);
-        digitalWrite(LED_OK, HIGH);
+        digitalWrite(LED_OK, MODE == "ANODE" ? HIGH : LOW);
         break;
       case 400:
-        delay(500);
-        digitalWrite(LED_NOK, LOW);
+        delay(100);
+        digitalWrite(LED_NOK, MODE == "ANODE" ? LOW : HIGH);
         doBuzz(100, 500);
-        digitalWrite(LED_NOK, HIGH);
+        digitalWrite(LED_NOK, MODE == "ANODE" ? HIGH : LOW);
         break;
       default:
-        digitalWrite(LED_OK, LOW);
-        digitalWrite(LED_NOK, LOW);
+        digitalWrite(LED_OK, MODE == "ANODE" ? LOW : HIGH);
+        digitalWrite(LED_NOK, MODE == "ANODE" ? LOW : HIGH);
         doBuzz(750, 500);
-        digitalWrite(LED_OK, HIGH);
-        digitalWrite(LED_NOK, HIGH);
+        digitalWrite(LED_OK, MODE == "ANODE" ? HIGH : LOW);
+        digitalWrite(LED_NOK, MODE == "ANODE" ? HIGH : LOW);
         break;
     }
 }
-
 
 void setup()
 {
@@ -75,8 +75,8 @@ void setup()
   pinMode(LED_WiG, OUTPUT);
   pinMode(LED_OK, OUTPUT);
   pinMode(LED_NOK, OUTPUT);
-  digitalWrite(LED_OK, HIGH);
-  digitalWrite(LED_NOK, HIGH);
+  digitalWrite(LED_OK, MODE == "ANODE" ? HIGH : LOW);
+  digitalWrite(LED_NOK, MODE == "ANODE" ? HIGH : LOW);
   
   InitWiFi(0);
   

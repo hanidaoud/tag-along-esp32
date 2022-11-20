@@ -49,6 +49,13 @@ case $yn in
         done;;
 esac
 
+read -p ":: $(tput bold)LEDs are common anode or cathode [A/c] $(tput sgr0)" yn
+
+case $yn in
+    [Cc]* ) echo -e "#ifndef MODE\n#define MODE \"CATHODE\"\n#endif\n" >> config.h;;
+    * ) echo -e "#ifndef MODE\n#define MODE \"ANODE\"\n#endif\n" >> config.h;;
+esac
+
 
 for i in {0..2}
 do
