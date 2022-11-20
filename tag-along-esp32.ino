@@ -10,6 +10,14 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);
 const char* ssid = ESSID;
 const char* password = PASSWD;
 
+void LED(int pin, bool state) {
+  if (state) {
+    digitalWrite(pin, MODE == "ANODE" ? LOW : HIGH);
+  }
+  else if (! state) {
+    digitalWrite(pin, MODE == "ANODE" ? HIGH : LOW);
+  }
+}
 
 void InitWiFi(bool action)
 {
@@ -17,16 +25,15 @@ void InitWiFi(bool action)
     WiFi.disconnect();
   }
   WiFi.begin(ssid, password);
-    Serial.println("Reconnecting to WiFi...");
     while (WiFi.status() != WL_CONNECTED) {
-      digitalWrite(LED_WiG, MODE == "ANODE" ? LOW : HIGH);
-      digitalWrite(LED_WiR, MODE == "ANODE" ? LOW : HIGH);
+      LED(LED_WiG, 1);
+      LED(LED_WiR, 1);
       delay(125);
-      digitalWrite(LED_WiG, MODE == "ANODE" ? HIGH : LOW);
-      digitalWrite(LED_WiR, MODE == "ANODE" ? HIGH : LOW);
+      LED(LED_WiG, 0);
+      LED(LED_WiR, 0);
       delay(125);
     }
-    digitalWrite(LED_WiG, MODE == "ANODE" ? LOW : HIGH);
+    LED(LED_WiG, 1);
 }
 
 void doBuzz(int freq, int dur)
@@ -48,22 +55,22 @@ void feedback(int res)
   switch(res){
       case 200:
         delay(100);
-        digitalWrite(LED_OK, MODE == "ANODE" ? LOW : HIGH);
-        doBuzz(0, 500); //900);
-        digitalWrite(LED_OK, MODE == "ANODE" ? HIGH : LOW);
+        LED(LED_OK, 1);
+        doBuzz(0, 500);
+        LED(LED_OK, 0);
         break;
       case 400:
         delay(100);
-        digitalWrite(LED_NOK, MODE == "ANODE" ? LOW : HIGH);
+        LED(LED_NOK, 1);
         doBuzz(100, 500);
-        digitalWrite(LED_NOK, MODE == "ANODE" ? HIGH : LOW);
+        LED(LED_NOK, 0);
         break;
       default:
-        digitalWrite(LED_OK, MODE == "ANODE" ? LOW : HIGH);
-        digitalWrite(LED_NOK, MODE == "ANODE" ? LOW : HIGH);
+        LED(LED_OK, 1);
+        LED(LED_NOK, 1);
         doBuzz(750, 500);
-        digitalWrite(LED_OK, MODE == "ANODE" ? HIGH : LOW);
-        digitalWrite(LED_NOK, MODE == "ANODE" ? HIGH : LOW);
+        LED(LED_OK, 0);
+        LED(LED_NOK, 0);
         break;
     }
 }
@@ -75,8 +82,8 @@ void setup()
   pinMode(LED_WiG, OUTPUT);
   pinMode(LED_OK, OUTPUT);
   pinMode(LED_NOK, OUTPUT);
-  digitalWrite(LED_OK, MODE == "ANODE" ? HIGH : LOW);
-  digitalWrite(LED_NOK, MODE == "ANODE" ? HIGH : LOW);
+  LED(LED_OK, 0);
+  LED(LED_NOK, 0);
   
   InitWiFi(0);
   
