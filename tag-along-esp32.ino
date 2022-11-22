@@ -21,7 +21,7 @@ void LED(int pin, bool state) {
 
 void InitWiFi(bool action)
 {
-  if (action == 1) {
+  if (action) {
     WiFi.disconnect();
   }
   WiFi.begin(ssid, password);
